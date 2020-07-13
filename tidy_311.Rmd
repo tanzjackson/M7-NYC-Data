@@ -1,0 +1,36 @@
+---
+title: "tidy_311"
+author: "Tanzania Jackson"
+date: "7/12/2020"
+output: html_document
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In the dataset NYC_Data, there are many columns with more than one set of informaiton in it. Meaning that every value doesn't have its own cell which is inherently messy.To tidy data up we will need to separate the columns and try to organize them in a tidy fashion. 
+
+```{r}
+'NYC_Data' %>%
+  separate(Location, into=c("point","latitude", "longtitude"), sep=" ")
+```
+
+```{r}
+NYC_Data %>%
+  separate(Incident_Address, into=c("House_Number", "Street_Name", "Street_Type","Other_Street_Info"), sep= "")%>%
+  unite(Street,Street_Name, Street_Type, Other_Street_Info)
+```
+
+```{r}
+NYC_Data %>%
+  separate(Created_Date, into=c("Year", "Month", "Date","Hour", "Minute", "Second"))%>%
+  unite(Date,Year, Month, Date)%>%
+  unite(Time, Hour, Minute, Second)
+```
+
